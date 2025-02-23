@@ -9,19 +9,35 @@ from datetime import timedelta , datetime
 from flask import Flask, render_template
 import joblib 
 import matplotlib.pyplot as plt
+import os
 
 app = Flask(__name__)
 
 #.\env\Scripts\activate 
-
-# Constants
-FILE_PATH = r"C:\Users\sumit\OneDrive\Desktop\kns\uploads\5min_candles.csv" # Path to your CSV file
+ 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.join(BASE_DIR, "uploads", "5min_candles.csv")
 
 def load_data_from_csv(file_path):
-    df = pd.read_csv(file_path, parse_dates=['Date'])
-    df['Date'] = df['Date'].dt.tz_localize(None)
-    df.set_index('Date', inplace=True)
-    return df
+    """Loads and preprocesses CSV data."""
+    try:
+        df = pd.read_csv(file_path, parse_dates=['Date'])
+        
+        # Ensure 'Date' column exists
+        if 'Date' in df.columns:
+            df['Date'] = pd.to_datetime(df['Date'], errors='coerce')  # Convert to datetime
+            df.dropna(subset=['Date'], inplace=True)  # Drop rows with invalid dates
+            df.set_index('Date', inplace=True)
+        else:
+            raise ValueError("Column 'Date' not found in CSV file.")
+
+        df.dropna(inplace=True)  # Remove any remaining NaN values
+        return df
+
+    except Exception as e:
+        print(f"Error loading CSV: {e}")
+        return None  # Return None if an error occurs
+
 
 # Load live market data from yFinance and filter for market hours
 def load_live_data(ticker, period='1d', interval='5m'):
@@ -218,39 +234,7 @@ def graph_plots(combined_data, price_model):
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
-# Flask route to trigger the prediction process
-# @app.route('/predict', methods=['GET'])
-# def predict():
-#     historical_data = load_data_from_csv(FILE_PATH)
-#     live_data = load_live_data('^NSEI')
-
-#     # Rename the columns of live_data to match historical_data
-#     live_data.columns = ['Open', 'High', 'Low', 'Close']
-#     combined_data = pd.concat([historical_data, live_data], axis=0)
-
-#     # Add technical indicators
-#     data_with_indicators = add_technical_indicators(combined_data)
-
-#     # Prepare data for pattern recognition and price prediction
-#     X, y = prepare_data(data_with_indicators)
-#     X_price, y_price = prepare_data(data_with_indicators)
-
-#     # Load saved models
-#     pattern_model = load_model('pattern_model.pkl')
-#     price_model = load_model('price_prediction_model.pkl')
-
-#     # Predict the next 5-minute closing price
-#     predicted_price, next_candle_time = predict_next_candle_close(data_with_indicators, price_model)
-     
-#     # Call the graph_plots function
-#     plot_filename = graph_plots(combined_data, price_model)
-#     return render_template('index.html', 
-#                            chart_url=plot_filename,  # Pass the chart URL dynamically if required
-#                            next_candle_time=next_candle_time.strftime('%Y-%m-%d %H:%M:%S'),
-#                            predicted_price=predicted_price,
-#                            res="Prediction Successful!")  # Example status message
+ 
 @app.route('/predict', methods=['GET'])
 def predict():
     historical_data = load_data_from_csv(FILE_PATH)
