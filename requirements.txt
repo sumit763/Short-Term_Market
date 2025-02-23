@@ -8,3 +8,5 @@ xgboost
 cython==0.29.36
 gunicorn
 TA-Lib==0.6.3
+ta==0.10.2
+
