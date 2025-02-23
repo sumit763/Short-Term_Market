@@ -1,0 +1,141 @@
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  color: black;
+}
+
+header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  background-color: black;
+  color: white;
+  border-bottom: 4px solid #4ffdfd;
+}
+.logo {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin: 10px 0;
+  color: white;
+}
+
+p {
+  font-size: 1.125rem;
+  margin: 10px 0;
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 10px;
+  /* gap: 10px; */
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-preview {
+  width: 80%;
+  height: auto;
+  border: 1.5px solid #4ffdfd;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #fd914c;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #f05531;
+}
+
+.info-section {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.info-section h2 {
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+h3 {
+  color: #000000;
+}
+
+.info-section p {
+  color: #000000;
+}
+
+.prediction-container {
+  /* display: flex;
+  justify-content: flex-start;
+  align-items: flex-start; */
+  font: bold;
+  gap: 20px;
+}
+
+.prediction-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.prediction-header {
+  flex-basis: 27%;
+}
+
+.prediction-details {
+  flex-grow: 1;
+}
+
+.prediction-item h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+h3 span {
+  font-weight: normal;
+}
