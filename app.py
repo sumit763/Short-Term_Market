@@ -270,5 +270,7 @@ def predict():
                            res="Prediction Successful!")  # Example status message
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Use 5000 if PORT is not set
-    app.run(host='0.0.0.0', port=port)
+    port = os.environ.get("PORT")  # Get PORT from environment
+    if not port or not port.isdigit():  # Ensure PORT is valid
+        port = 5000  # Default port
+    app.run(host='0.0.0.0', port=int(port))
