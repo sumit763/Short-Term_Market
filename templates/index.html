@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Price Action Prediction</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <img src="/static/logo.png" alt="Logo" class="logo" />
+      <h1>Price Action Prediction</h1>
+      <p>Predict using the model</p>
+    </header>
+
+    <div class="container">
+      <div class="chart-section">
+        <!-- Display chart using the chart_url -->
+        <!-- <img src="{{ chart_url }}" alt="chart" class="chart-preview" /> -->
+        <img src="/static/image.png" alt="chart" class="chart-preview" />
+        <div class="buttons">
+          <!-- Only the prediction button -->
+          <form method="get" action="/predict">
+            <button type="submit" class="btn">Predict Next Candle</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h2>
+          <i class="fas fa-info-circle"></i>Experience real-time stock price
+          predictions with an advanced model using technical indicators and
+          candlestick patterns. Get precise insights to assist in making timely
+          trading decisions and stay ahead in the market with next 5-minute
+          forecasts.
+        </h2>
+        <div class="prediction-container">
+          <div class="prediction-item-prediction-header">
+            <p><strong>Prediction Result:</strong></p>
+          </div>
+          <div class="prediction-item-prediction-details">
+            <p>
+              Time for Next Candle:
+              <strong>{{ next_candle_time }}</strong>
+            </p>
+            <p>
+              Next Candle Close Prediction:
+              <strong>{{ predicted_price }}</strong>
+            </p>
+          </div>
+        </div>
+
+        <h3>Status: <span>{{ res }}</span></h3>
+      </div>
+    </div>
+  </body>
+</html>
