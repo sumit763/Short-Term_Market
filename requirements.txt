@@ -1,3 +1,4 @@
+python==3.10
 Flask
 pandas==1.5.3
 numpy==1.23.5
